@@ -8,7 +8,9 @@ we propose one novel model for point cloud semantic segmentation, which exploit 
 
 ## Data download and process
 
-We provide the processed files, you can download S3DIS data <a href="https://1drv.ms/u/s!AjxFyWxg5usOajIvRkNnDLOnT3M?e=mmhCMf">here</a>  . To prepare your own S3DIS Dataset HDF5 files, refer to <a href="https://github.com/charlesq34/pointnet">PointNet</a>, you need to firstly  download <a href="http://buildingparser.stanford.edu/dataset.html">3D indoor parsing dataset version 1.2</a> (S3DIS Dataset) and convert original data to data label files by 
+#### Scene Semantic Segmentation
+
+We provide the processed files, you can download S3DIS data <a href="https://drive.google.com/file/d/1xDM4JJzCrcNpIw1xFju-4SztnNxOwV6p/view?usp=sharing">here</a>  . To prepare your own S3DIS Dataset HDF5 files, refer to <a href="https://github.com/charlesq34/pointnet">PointNet</a>, you need to firstly  download <a href="http://buildingparser.stanford.edu/dataset.html">3D indoor parsing dataset version 1.2</a> (S3DIS Dataset) and convert original data to data label files by 
 
 ```bash
 python collect_indoor3d_data.py
@@ -21,6 +23,17 @@ python gen_indoor3d_h5.py
 ```
 
 to downsampling and generate HDF5 files. You can change the number of points in the downsampling by modify this file.
+
+
+#### Part Segmentation
+
+The processed files of ShapeNet dataset can download <a href="https://drive.google.com/file/d/1nVP_zSsD2V6sHTzQmn690RvJHGftopJi/view?usp=sharing">here</a>  . 
+
+
+#### Dynamic Semantic Segmentation
+
+The processed files of Synthia4D dataset can download <a href="https://drive.google.com/file/d/10eDhaZ3ghwNDdVktHgvCG8yZ_3XvUpcN/view?usp=sharing">here</a>  . 
+
 
 ## Model Training and Testing
 
@@ -57,13 +70,13 @@ cd tf_ops/sampling
 
 Refer to <a href="https://github.com/charlesq34/pointnet2">PointNet++</a> for more details.
 
+#### Scene Semantic Segmentation
 
-#### Training
 
 When you have finished download processed data files or have prepared HDF5 files by yourself, to fill in your data path in the `train.py`. Then start training by:
 
 ```bash
-cd models
+cd sem_seg
 python train.py
 ```
 
@@ -79,8 +92,6 @@ done \
 
 you will get six models, each one of them is trained on five areas and tested on the other area.
 
-
-#### Testing
 
 After training, you can test model by:
 
@@ -101,7 +112,25 @@ We provide our trained model. When you finish your Data Processing, you can test
 ```bash
 python test.py --ckpt trained_model/best_seg_model.ckpt  --ckpt_meta trained_model/best_seg_model.ckpt.meta
 ```
+#### Part Segmentation
 
+When you have finished download processed data files of the ShapeNet dataset, to fill in your data path in the `train.py`. Then start training by:
+
+```bash
+cd part_seg
+python train.py
+```
+
+The training log and test results will be printed.
+
+#### Dynamic Semantic Segmentation
+
+When you have finished download processed data files of the Synthia4D dataset, to fill in your data path in the `train_multi_gpu.py`. Then start training by:
+
+```bash
+cd dy_seg
+python train_multi_gpu.py
+```
 
 ## Citation
 ```
